@@ -1,0 +1,118 @@
+/*comeco do codigo*/
+body{
+    margin: 0%;
+    padding: 0%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: aliceblue;
+}
+.titulo1 {
+    text-align: center;
+    color: gray;
+    font-size: 30px;
+}
+.texto1 {
+    text-align: left;
+    color: black;
+    font-size: 20px;
+}
+.imagem {
+    width: 500px;
+}
+/*fim do codigo*/
+/*codigos do exercicio 6*/
+.background2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://gogamers.gg/wp-content/uploads/2022/09/minecraft-divulgacao-optimized.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.5;
+    z-index: -1;
+
+}
+/*fim do exercicio6*/
+/*começo do exercicio7*/
+.background3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSG4QUcYFUcsL2zc69rM89exlFQHbuqNCkaAg&s);
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.5;
+    z-index: -1;
+}
+.botao {
+    background-color: red;
+    color: white;
+    width: 500px;
+    height: 50px;
+    border: 50%;
+    border-radius: 15px;
+}
+.titulo2 {
+    background-color: blue;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    border-radius: 20px;
+    width: 300px;
+}
+.box {
+    width: 700px;               /* Largura da caixa */
+    padding: 20px;              /* Espaçamento interno (para afastar os elementos das bordas) */
+    background-color: #f0f0f0;  /* Cor de fundo da caixa */
+    border: 2px solid #ccc;     /* Borda de 2px com cor cinza */
+    border-radius: 10px;        /* Cantos arredondados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin: 50px auto;  
+}
+.texto2 {
+    text-align: justify;
+    color: black;
+    font-size: 30px;
+}
+.formCont {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+botao:hover {
+    background-color: blue;
+}
+.titulo3 {
+    background-color: blue;
+    text-align: center;
+    color: white;
+    font-size: 50px;
+    border-radius: 20px;
+    width: 2000px;
+    height: 100px;
+}
+.botao1 {
+    background-color: blue;
+    color: white;
+    width: 500px;
+    height: 50px;
+    border: 50%;
+    border-radius: 15px;
+    font-size: 20px;
+}
+.input1 {
+    background-color: white;
+    color: white;
+    width: 500px;
+    height: 50px;
+    border: 50%;
+    border-radius: 15px;
+    font-size: 20px;
+}
