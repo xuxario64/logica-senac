@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Galinha - Rodovia com Fundo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+            background-color: #f0f0f0;
+            margin: 0 auto;
+        }
+        #score, #gameOver {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: black;
+        }
+        #gameOver {
+            display: none;
+            font-size: 36px;
+            color: red;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="score">Pontuação: 0</div>
+    <div id="gameOver">GAME OVER</div>
+    <canvas id="gameCanvas"></canvas>
+    
+    <script>
+        // Configurações iniciais
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Definir o tamanho do canvas
+        canvas.width = 800;
+        canvas.height = 600;
+        
+        // Carregar a imagem de fundo
+        const background = new Image();
+        background.src = 'https://thumbs.dreamstime.com/b/estrada-vista-de-cima-do-zang%C3%A3o-109509841.jpg'; // Substitua por sua URL de imagem de fundo
+
+        // Propriedades da galinha (personagem principal)
+        const galinha = {
+            x: canvas.width / 2 - 25,
+            y: canvas.height - 50,
+            width: 50,
+            height: 50,
+            speed: 5,
+            color: 'yellow',
+        };
+
+        // Propriedades dos carros
+        const carros = [];
+        const numCarros = 5;
+        const carWidth = 50;
+        const carHeight = 30;
+        const carSpeed = 2;
+
+        // Sistema de pontuação
+        let pontuacao = 0;
+        let gameOver = false;
+
+        // Função para criar os carros
+        function criarCarros() {
+            for (let i = 0; i < numCarros; i++) {
+                let car = {
+                    x: Math.random() * (canvas.width - carWidth),
+                    y: Math.random() * (canvas.height - 100),
+                    width: carWidth,
+                    height: carHeight,
+                    color: 'red',
+                    speed: carSpeed + Math.random() * 2,
+                };
+                carros.push(car);
+            }
+        }
+
+        // Função de atualização (atualiza o jogo)
+        function update() {
+            if (gameOver) {
+                document.getElementById("gameOver").style.display = 'block';
+                return;
+            }
+
+            // Desenhar o fundo (imagem)
+            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+            // Desenhar a galinha
+            ctx.fillStyle = galinha.color;
+            ctx.fillRect(galinha.x, galinha.y, galinha.width, galinha.height);
+
+            // Desenhar os carros
+            carros.forEach(car => {
+                ctx.fillStyle = car.color;
+                ctx.fillRect(car.x, car.y, car.width, car.height);
+
+                // Movimentação dos carros
+                car.x -= car.speed;
+
+                // Reposicionar o carro quando ele sair da tela
+                if (car.x + car.width < 0) {
+                    car.x = canvas.width;
+                    car.y = Math.random() * (canvas.height - 100);
+                }
+            });
+
+            // Verificar colisões com os carros
+            verificarColisoes();
+
+            // Verificar se a galinha atravessou a estrada
+            verificarAtravessou();
+
+            // Atualizar pontuação
+            document.getElementById("score").textContent = "Pontuação: " + pontuacao;
+
+            // Solicitar uma nova animação
+            requestAnimationFrame(update);
+        }
+
+        // Função para mover a galinha
+        function moverGalinha(event) {
+            if (gameOver) return;
+
+            switch(event.key) {
+                case "ArrowUp":
+                    if (galinha.y > 0) galinha.y -= galinha.speed;
+                    break;
+                case "ArrowDown":
+                    if (galinha.y + galinha.height < canvas.height) galinha.y += galinha.speed;
+                    break;
+                case "ArrowLeft":
+                    if (galinha.x > 0) galinha.x -= galinha.speed;
+                    break;
+                case "ArrowRight":
+                    if (galinha.x + galinha.width < canvas.width) galinha.x += galinha.speed;
+                    break;
+            }
+        }
+
+        // Função para verificar colisões com os carros
+        function verificarColisoes() {
+            carros.forEach(car => {
+                if (
+                    galinha.x < car.x + car.width &&
+                    galinha.x + galinha.width > car.x &&
+                    galinha.y < car.y + car.height &&
+                    galinha.y + galinha.height > car.y
+                ) {
+                    // Se houver colisão, o jogo termina
+                    gameOver = true;
+                }
+            });
+        }
+
+        // Função para verificar se a galinha cruzou a estrada
+        function verificarAtravessou() {
+            if (galinha.y < 0) {
+                // A galinha tocou a parte de cima da tela (atravessou)
+                pontuacao += 10;
+                galinha.y = canvas.height - 50; // Reseta a galinha para a parte inferior
+            }
+        }
+
+        // Adicionar evento de teclado para movimentar a galinha
+        window.addEventListener('keydown', moverGalinha);
+
+        // Aguardar até que a imagem de fundo seja carregada antes de iniciar o jogo
+        background.onload = function() {
+            // Criar os carros e iniciar o jogo
+            criarCarros();
+            update();
+        };
+    </script>
+</body>
+</html>
